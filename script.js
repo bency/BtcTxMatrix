@@ -1,3 +1,8 @@
+function Rain(chars, fontSize) {
+    this.chars = chars;
+    this.fontSize = fontSize;
+    this.width = fontSize;
+}
 $(document).ready(function() {
 
     var c = document.getElementById("c");
