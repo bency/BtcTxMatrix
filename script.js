@@ -24,9 +24,11 @@ $(document).ready(function() {
     var rainingtextSets = [];
 
     for (var column = 0, i = 0; column < columns; column++) {
+        var size = fontSize * (parseInt(Math.random() * 10) % 4 + 1);
         rainingtextSets[column] = c.height;
         txChars = textSets[column % textSets.length].split("");
-        rains[column] = new Rain(txChars, fontSize);
+        rains[column] = new Rain(txChars, size);
+        columns = columns - (size / fontSize) + 1;
     }
 
     function draw() {
