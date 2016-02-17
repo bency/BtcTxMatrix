@@ -5,7 +5,7 @@ $(document).ready(function() {
     var fontSize = 15;
 
     initCanvas(c);
-    var txs = queryTxs();
+    var textSets = querytextSets();
 
     $(window).resize(respondCanvas);
 
@@ -15,11 +15,11 @@ $(document).ready(function() {
 
     var txChars = [];
     var columns = c.width / fontSize;
-    var rainingTxs = [];
+    var rainingtextSets = [];
 
-    for (var x = 0; x < columns; x++) {
-        rainingTxs[x] = c.height;
-        txChars[x] = txs[x % txs.length].split("");
+    for (var column = 0; column < columns; column++) {
+        rainingtextSets[column] = c.height;
+        txChars[column] = textSets[column % textSets.length].split("");
     }
 
     function draw() {
@@ -27,14 +27,15 @@ $(document).ready(function() {
         ctx.fillRect(0, 0, c.width, c.height);
         ctx.fillStyle = "#F7931A";
         ctx.font = fontSize + "px courier";
-        for (var i = 0; i < rainingTxs.length; i++) {
-            var character = txChars[i][(rainingTxs[i] - 1) % txChars[0].length];
-            ctx.fillText(character, i * fontSize, rainingTxs[i] * fontSize);
+        var rainNum = rainingtextSets.length;
+        for (var column = 0; column < rainNum; column++) {
+            var character = txChars[column][(rainingtextSets[column] - 1) % txChars[column].length];
+            ctx.fillText(character, column * fontSize, rainingtextSets[column] * fontSize);
 
-            if (rainingTxs[i] * fontSize > c.height && Math.random() > 0.993) {
-                rainingTxs[i] = 0
+            if (rainingtextSets[column] * fontSize > c.height && Math.random() > 0.993) {
+                rainingtextSets[column] = 0
             }
-            rainingTxs[i]++;
+            rainingtextSets[column]++;
         }
     }
     setInterval(draw, 100);
@@ -49,22 +50,22 @@ function initCanvas(canvas) {
     c.getContext("2d").fillRect(0, 0, c.width, c.height);
 }
 
-function queryTxs() {
-    var txs = reserveTxs;
+function querytextSets() {
+    var textSets = reservetextSets;
     $.ajax({
         url: "https://mainnet.helloblock.io/v1/transactions/latest?limit=40&cors=true",
         async: false,
         success: function(data) {
             data.data.transactions.forEach(function(tx) {
-                txs.unshift(tx.txHash);
+                textSets.unshift(tx.txHash);
             })
         }
     });
-    return txs;
+    return textSets;
 }
 
 //if the query fails..
-var reserveTxs = [
+var reservetextSets = [
     "945692d1dbd08e17a5021add6d61d10d7a994cc9bb2bb3c69c998fe4c696bd9b",
     "412cda8f922c384c23ddce2e61465f720eea6911276f928fd5a71ce0a4d49fcf",
     "2e54b194a268b716ed8229b91c5065c1265e40771284e106782e80a670f49a7d",
