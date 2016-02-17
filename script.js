@@ -35,7 +35,9 @@ $(document).ready(function() {
             if (rainingtextSets[column] * fontSize > c.height && Math.random() > 0.993) {
                 rainingtextSets[column] = 0
             }
-            rainingtextSets[column]++;
+            if (Math.random() > 0.26) {
+                rainingtextSets[column]++;
+            }
         }
     }
     setInterval(draw, 100);
