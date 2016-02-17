@@ -6,7 +6,6 @@ $(document).ready(function() {
 
     initCanvas(c);
     var txs = queryTxs();
-    initLinks(c, txs, fontSize);
 
     $(window).resize(respondCanvas);
 
@@ -62,13 +61,6 @@ function queryTxs() {
         }
     });
     return txs;
-}
-
-function initLinks(canvas, txs, fontSize) {
-    canvas.onclick = function(e) {
-        var tx = txs[Math.floor(e.x / fontSize) % txs.length];
-        window.open('http://blockchain.info/tx/' + tx, '_blank');
-    };
 }
 
 //if the query fails..
