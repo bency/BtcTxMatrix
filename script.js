@@ -19,12 +19,14 @@ $(document).ready(function() {
     }
 
     var txChars = [];
+    var rains = [];
     var columns = c.width / fontSize;
     var rainingtextSets = [];
 
-    for (var column = 0; column < columns; column++) {
+    for (var column = 0, i = 0; column < columns; column++) {
         rainingtextSets[column] = c.height;
-        txChars[column] = textSets[column % textSets.length].split("");
+        txChars = textSets[column % textSets.length].split("");
+        rains[column] = new Rain(txChars, fontSize);
     }
 
     function draw() {
@@ -32,17 +34,18 @@ $(document).ready(function() {
         var oldCharColor = "#4AD255";
         ctx.fillStyle = "rgba(0, 0, 0, 0.07)";
         ctx.fillRect(0, 0, c.width, c.height);
-        ctx.font = fontSize + "px courier";
         var rainNum = rainingtextSets.length;
         for (var column = 0; column < rainNum; column++) {
-            var oldCharacter = txChars[column][(rainingtextSets[column] - 1) % txChars[column].length - 1] || '';
-            var character = txChars[column][(rainingtextSets[column] - 1) % txChars[column].length];
+            var rain = rains[column];
+            ctx.font = rain.fontSize + "px courier";
+            var oldCharacter = rain.chars[(rainingtextSets[column] - 1) % rain.chars.length - 1] || '';
+            var character = rain.chars[(rainingtextSets[column] - 1) % rain.chars.length];
             ctx.fillStyle = oldCharColor;
-            ctx.fillText(oldCharacter, column * fontSize, (rainingtextSets[column] - 1) * fontSize);
+            ctx.fillText(oldCharacter, column * rain.fontSize, (rainingtextSets[column] - 1) * rain.fontSize);
             ctx.fillStyle = currentCharColor;
-            ctx.fillText(character, column * fontSize, rainingtextSets[column] * fontSize);
+            ctx.fillText(character, column * rain.fontSize, rainingtextSets[column] * rain.fontSize);
 
-            if (rainingtextSets[column] * fontSize > c.height && Math.random() > 0.993) {
+            if (rainingtextSets[column] * rain.fontSize > c.height && Math.random() > 0.993) {
                 rainingtextSets[column] = 0
             }
             if (Math.random() > 0.26) {
