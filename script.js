@@ -23,13 +23,18 @@ $(document).ready(function() {
     }
 
     function draw() {
+        var currentCharColor = "#fff";
+        var oldCharColor = "#4AD255";
         ctx.fillStyle = "rgba(0, 0, 0, 0.07)";
         ctx.fillRect(0, 0, c.width, c.height);
-        ctx.fillStyle = "#F7931A";
         ctx.font = fontSize + "px courier";
         var rainNum = rainingtextSets.length;
         for (var column = 0; column < rainNum; column++) {
+            var oldCharacter = txChars[column][(rainingtextSets[column] - 1) % txChars[column].length - 1] || '';
             var character = txChars[column][(rainingtextSets[column] - 1) % txChars[column].length];
+            ctx.fillStyle = oldCharColor;
+            ctx.fillText(oldCharacter, column * fontSize, (rainingtextSets[column] - 1) * fontSize);
+            ctx.fillStyle = currentCharColor;
             ctx.fillText(character, column * fontSize, rainingtextSets[column] * fontSize);
 
             if (rainingtextSets[column] * fontSize > c.height && Math.random() > 0.993) {
